@@ -1,26 +1,25 @@
-# Utilisez l'image Ubuntu officielle comme image de base
 FROM ubuntu:latest
 
-# Installation des outils de base
-RUN apt-get update && apt-get install -y \
-    wget \
-    unzip \
-    && rm -rf /var/lib/apt/lists/*
+# Création du épertoire /CTF/directory
+RUN mkdir -p /CTF/directory
 
-# Répertoire caché et Fichier caché contenant le texte encodé
-RUN mkdir -p /.dossier_caché \
-    && touch /.dossier_caché/.encoded_flag \
-    && echo "TW9uX1RleHRlX0ltcG9zZdQ=" > /.dossier_caché/.encoded_flag
+# Installer zip
+RUN apt-get update && apt-get install -y zip
 
-# Créez un répertoire /app
-RUN mkdir /app
+# 300 fichiers avec string aléatoires (sauf pour le vrai flag)
+RUN for i in {1..300}; do \
+      if [ "$i" -eq 1 ]; then \
+        echo "Le_vrai_flag" > /CTF/directory/flag$i.txt; \
+      else \
+        head -c 30 /dev/urandom | base64 > /CTF/directory/flag$i.txt; \
+      fi; \
+    done
 
-# Copie du dossier src et du fichier Makefile dans le conteneur
-COPY flag.zip /app
-COPY image.png /app
+# Créez une archive ZIP à partir des fichiers générés
+RUN cd /CTF/directory && zip -r /CTF/directory.zip .
 
-# Définition du répertoire de travail
-WORKDIR /app
+# Suppression des fichiers individuels non nécessaires
+RUN rm -rf /CTF/directory
 
-# Exécutez la commande 'yes' avec un script pour décoder le flag au moment de l'exécution
-#CMD ["sh", "-c", "decoded_flag=$(cat /dossier_caché/.encoded_flag | base64 -d) && yes \"$decoded_flag\" &"]
+# Commande par défaut pour lancer le conteneur
+CMD ["/bin/bash"]
