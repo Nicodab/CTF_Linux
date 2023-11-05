@@ -7,13 +7,16 @@ RUN apt-get update && apt-get install -y \
     && rm -rf /var/lib/apt/lists/*
 
 # Répertoire caché et Fichier caché contenant le texte encodé
-#RUN mkdir -p /.dossier_caché \
-#    && touch /.dossier_caché/.encoded_flag \
-#    && echo "TW9uX1RleHRlX0ltcG9zZdQ=" > /.dossier_caché/.encoded_flag
+RUN mkdir -p /.dossier_caché \
+    && touch /.dossier_caché/.encoded_flag \
+    && echo "TW9uX1RleHRlX0ltcG9zZdQ=" > /.dossier_caché/.encoded_flag
+
+# Créez un répertoire /app
+RUN mkdir /app
 
 # Copie du dossier src et du fichier Makefile dans le conteneur
-COPY ./flag.zip /app
-COPY ./image.png /app
+COPY flag.zip /app
+COPY image.png /app
 
 # Définition du répertoire de travail
 WORKDIR /app
