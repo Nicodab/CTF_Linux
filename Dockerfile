@@ -4,6 +4,7 @@ FROM ubuntu:latest
 # Installez des outils de base
 RUN apt-get update && apt-get install -y \
     wget \
+    unzip \
     && rm -rf /var/lib/apt/lists/*
 
 # Répertoire caché et Fichier caché contenant le texte encodé
