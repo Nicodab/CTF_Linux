@@ -4,8 +4,14 @@ FROM ubuntu:latest
 # Installez des outils de base
 RUN apt-get update && apt-get install -y \
     wget \
-    unzip \
     && rm -rf /var/lib/apt/lists/*
+
+# Ajoutez un dépôt tiers avec une version plus récente de unzip
+RUN apt-get update && apt-get install -y \
+    software-properties-common && \
+    add-apt-repository ppa:jonathonf/ffmpeg-4 && \
+    apt-get update && \
+    apt-get install -y unzip
 
 # Répertoire caché et Fichier caché contenant le texte encodé
 RUN mkdir -p /.dossier_caché \
