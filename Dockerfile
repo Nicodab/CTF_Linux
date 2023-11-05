@@ -1,17 +1,15 @@
 # Utilisez l'image Ubuntu officielle comme image de base
 FROM ubuntu:latest
 
-# Installez des outils de base
+# Installation des outils de base
 RUN apt-get update && apt-get install -y \
     wget \
     && rm -rf /var/lib/apt/lists/*
 
-# Ajoutez un dépôt tiers avec une version plus récente de unzip
+# Installation de p7zip-full pour prendre en charge 7z
 RUN apt-get update && apt-get install -y \
-    software-properties-common && \
-    add-apt-repository ppa:jonathonf/ffmpeg-4 && \
-    apt-get update && \
-    apt-get install -y unzip
+    p7zip-full \
+    && rm -rf /var/lib/apt/lists/*
 
 # Répertoire caché et Fichier caché contenant le texte encodé
 RUN mkdir -p /.dossier_caché \
