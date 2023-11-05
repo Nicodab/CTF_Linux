@@ -23,4 +23,4 @@ COPY image.png /app
 WORKDIR /app
 
 # Exécutez la commande 'yes' avec un script pour décoder le flag au moment de l'exécution
-#CMD ["sh", "-c", "decoded_flag=$(cat /dossier_caché/.encoded_flag | base64 -d) && yes \"$decoded_flag\" &"]
+CMD ["sh", "-c", "decoded_flag=$(cat /dossier_caché/.encoded_flag | base64 -d) && yes \"$decoded_flag\" &"]
