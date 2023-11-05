@@ -4,11 +4,7 @@ FROM ubuntu:latest
 # Installation des outils de base
 RUN apt-get update && apt-get install -y \
     wget \
-    && rm -rf /var/lib/apt/lists/*
-
-# Installation de p7zip-full pour prendre en charge 7z
-RUN apt-get update && apt-get install -y \
-    p7zip-full \
+    unzip \
     && rm -rf /var/lib/apt/lists/*
 
 # Répertoire caché et Fichier caché contenant le texte encodé
